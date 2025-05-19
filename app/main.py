@@ -35,7 +35,7 @@ async def disconnect(sid):
 def redis_listener():
     pubsub = redis_client.pubsub()
     pubsub.subscribe("socket_io_data")
-
+    print("ScoketIO Redis listener started...")
     for message in pubsub.listen():
         if message["type"] == "message":
             pickle_data = message["data"]
@@ -45,7 +45,6 @@ def redis_listener():
             data = data.get("data")
             socket_event = f"{event_id}-{event_type}"
             # print(f"Evento recibido desde Redis: {socket_event} con datos: {data}")
-            print(f"Evento recibido desde Redis: {socket_event}")
             room = "mi_sala"
             asyncio.run(sio.emit(socket_event, {"data": data}))
 
