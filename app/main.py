@@ -33,6 +33,23 @@ async def disconnect(sid):
     print(f"Cliente desconectado: {sid}")
 
 def redis_listener():
+    """
+    This function is a Redis listener that listens to the socket_io_data channel and emits the data to the socket.io server.
+    The data is emitted to the socket.io server using the sio.emit function.
+    The data is emitted to the socket.io server using the sio.emit function.
+    input data example:
+    {
+        "event_id": "123",
+        "event_type": "config_room-rtmp_status",
+        "data": {"rtmp_status": True}
+    }
+    the message published to redis is serialized using pickle.dumps and published to the socket_io_data channel.
+    the message received from redis is deserialized using pickle.loads.
+    the data is emitted to the socket.io server using the sio.emit function.
+    the socket.io server emits the data to the client using the socket.io client.
+    the socket.io client receives the data and emits the data to the client using the socket.io client.
+    the socket.io client receives the data and emits the data to the client using the socket.io client.
+    """
     pubsub = redis_client.pubsub()
     pubsub.subscribe("socket_io_data")
     print("ScoketIO Redis listener started...")
